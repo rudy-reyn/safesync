@@ -18,6 +18,7 @@ library
       src
   build-depends:
     , base >=4.7 && <5
+    , aeson
     , wreq
     , minio-hs
     , scotty
