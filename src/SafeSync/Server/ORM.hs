@@ -1,6 +1,8 @@
 -- Api.hs
 module SafeSync.Server.Api where
 
+data Metadata
+
 data Upload = Upload UserId UploadInfo
     deriving (Eq, Show)
 

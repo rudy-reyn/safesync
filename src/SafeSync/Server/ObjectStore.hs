@@ -1,7 +1,9 @@
 -- 07/27/22
 -- ObjectStore.hs
-module ObjectStore where
+module SafeSync.Server.ObjectStore where
 
 import Network.Minio
 
 stagePartitions = undefined
+download = undefined
+upload = undefined

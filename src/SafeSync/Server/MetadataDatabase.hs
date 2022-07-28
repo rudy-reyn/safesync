@@ -1,11 +1,10 @@
--- 07/27/22
--- MetadataDatabase.hs
-module MetadataDatabase where
+-- Server/MetadataDatabase.hs
+module SafeSync.Server.MetadataDatabase where
 
 import Database.Persist.TH
 import Database.Persist.Sql
 import Database.Persist.Postgresql
-
+import SafeSync.Server.ORM
 
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persist|
     Partition
@@ -25,4 +24,3 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persist|
         sync_time
         deriving Eq Show
 |]
-
