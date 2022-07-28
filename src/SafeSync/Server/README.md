@@ -1,3 +1,5 @@
+# Synchronization API
+
 The backend utilizes a private REST api called by the client application for managing files and
 partitions. The synchronization api is defined is with the following endpoints:
 
@@ -21,8 +23,6 @@ method and parameters:
 | DELETE | /remove | null |
 
 ## Endpoint Usages
-
----
 
 **`/download`, `/preview`, `/delete`:**
 
