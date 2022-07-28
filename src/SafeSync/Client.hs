@@ -1,6 +1,6 @@
 -- 07/03/22
 -- SafeSync.hs
-import SafeSync.Files
+import SafeSync.Client.Files
 import System.Environment (getArgs)
 
 parseArgs args

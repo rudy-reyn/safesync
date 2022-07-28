@@ -15,9 +15,9 @@ CREATE TABLE regular_file_metadata (
     size          INTEGER CHECK (size >= 0)
                           NOT NULL,
     modification_time TIMESTAMP,
-    checksum      STRING  CONSTRAINT valid_checksum CHECK (length(checksum) = 64)
+    checksum      STRING  CONSTRAINT valid_checksum CHECK (length(checksum) = 32)
                           NOT NULL,
-    symmetric_key STRING  CONSTRAINT valid_aes128_key CHECK (length(symmetric_key) = 32)
+    symmetric_key STRING  CONSTRAINT valid_aes128_key CHECK (length(symmetric_key) = 16)
                           NOT NULL
 );
 

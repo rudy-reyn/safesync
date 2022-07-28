@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 -- 07/02/22
 -- KDF.hs
-module SafeSync.KDF (
+module SafeSync.Client.KDF (
         Key, Salt, defaultOptions,
         argon2i, argon2i', argon2iS, argon2iS',
         sha256, sha256b, sha256s

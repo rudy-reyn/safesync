@@ -1,9 +1,35 @@
 -- 07/02/22
 -- File.hs
-module SafeSync.Files where
+module SafeSync.Client.Files where
 
 import Data.ByteString (ByteString)
 import qualified System.Posix as Posix
+
+data FileType
+    = Unsupported
+    | RegularFile
+    | Directory
+    -- | SymLink
+    -- | NamedPipe
+    -- | Socket
+    -- | DeviceFile
+    deriving (Eq, Enum, Show)
+
+-- instance Enum FileType where
+--     toEnum 100644 = RegularFile
+--     toEnum 40755 = Directory
+-- --     toEnum 20666 = DeviceFile
+-- --     toEnum 120755 = SymLink
+-- --     toEnum 140777 = Socket
+-- --     toEnum 10644 = NamedPipe
+--     toEnum 0 = Unsupported
+--     fromEnum RegularFile = 100644
+--     fromEnum Directory = 40755
+-- --     fromEnum DeviceFile = 20666
+-- --     fromEnum SymLink = 120755
+-- --     fromEnum Socket = 140777
+-- --     fromEnum NamedPipe = 10644
+--     fromEnum Unsupported = 0
 
 data FileInfo
     = FileInfo {
@@ -12,9 +38,6 @@ data FileInfo
             fileSize :: Posix.FileOffset,
             modificationTime :: Posix.EpochTime
         }
-    deriving (Eq, Show)
-
-data FileType = RegularFile | Directory | Unsupported
     deriving (Eq, Show)
 
 getFileType :: Posix.FileStatus -> IO FileType
