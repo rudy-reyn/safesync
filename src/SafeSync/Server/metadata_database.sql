@@ -2,8 +2,8 @@ BEGIN;
 
 CREATE TABLE IF NOT EXISTS public.partitions
 (
-    partition_id bigint NOT NULL,
-    user_id bigint NOT NULL,
+    partition_id character(16) NOT NULL,
+    user_id character(16) NOT NULL,
     salt character(16) COLLATE pg_catalog."default" NOT NULL,
     symmetric_key character(128) COLLATE pg_catalog."default" NOT NULL,
     next_id character varying COLLATE pg_catalog."default",
@@ -13,14 +13,14 @@ CREATE TABLE IF NOT EXISTS public.partitions
 
 CREATE TABLE IF NOT EXISTS public.sync_times
 (
-    user_id bigint NOT NULL,
-    sync_time timestamp without time zone,
+    user_id character(16) NOT NULL,
+    last_sync_time timestamp without time zone,
     CONSTRAINT sync_times_pkey PRIMARY KEY (user_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.metadata
 (
-    partition_id bigint NOT NULL,
+    partition_id character(16) NOT NULL,
     path character varying NOT NULL,
     modification_time character varying,
     PRIMARY KEY (partition_id)
