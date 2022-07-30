@@ -4,6 +4,7 @@ import SafeSync.Client.Files where
 
 -- fileInfo is unpacked for the partition_journal database.
 -- The remote filePartitionJournal is encrypted.
+
 data FileEntry = {
     fileId :: String, -- I might want to use an actual ID type.
     fileInfo :: FileInfo,

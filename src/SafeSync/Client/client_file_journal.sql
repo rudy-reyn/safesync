@@ -29,6 +29,5 @@ CREATE TABLE file_system (
     file_type         STRING CHECK (file_type IN ('f', 'd'))
 );
 
-
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;
