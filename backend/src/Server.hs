@@ -13,7 +13,7 @@ import Network.Wai.Handler.Warp
 import Servant
 import Servant.API
 
-import Api
+import Server.Api
 
 type AuthM = Maybe ByteString
 data Success = Success

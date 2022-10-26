@@ -8,7 +8,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeOperators #-}
 
-module Api where
+module Server.Api where
 
 import Data.Time (UTCTime)
 import Data.Text (Text)
@@ -24,7 +24,7 @@ type EncBase64 = Base64 -- Encrypted Base64
 
 type Api = ObjectEndpoint :<|> PartitionEndpoint
 
-type Authorization = Header "Authorization" ByteString
+type Authorization = Header "Authorization" Text
 
 type ObjectEndpoint
     = "object"

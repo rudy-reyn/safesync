@@ -11,7 +11,7 @@
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-module Models where
+module Server.Models where
 
 import Data.Time (UTCTime)
 import Data.Text (Text)
