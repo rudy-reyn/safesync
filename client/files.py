@@ -1,4 +1,3 @@
-# 10/24/22
 # files.py
 from __future__ import annotations
 from typing import Optional, NewType, Self
@@ -25,7 +24,6 @@ class Metadata:
     def from_path(cls, file: Path) -> Optional[Self]:
         if not file.exists():
             return
-        file_id =
         file_type = get_file_type(file)
         mod_time = None
         size = None
@@ -42,6 +40,9 @@ class Metadata:
     @classmethod
     def from_path_name(cls, path_name: str) -> Optional[Self]:
         return cls.from_path(Path(path_name))
+
+def generate_id() -> str:
+    return str(uuid.uuid4())
 
 @dataclass
 class Partition:
