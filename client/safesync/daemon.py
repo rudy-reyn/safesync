@@ -15,9 +15,9 @@ from watchdog.events import (
     FileCreatedEvent
 )
 
-import files
-from files import FileType
-import client_file_journal as cfj
+import safesync.files
+from .files import FileType
+import safesync.client_file_journal as cfj
 
 T = TypeName("T")
 
