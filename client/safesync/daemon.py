@@ -15,7 +15,7 @@ from watchdog.events import (
     FileCreatedEvent
 )
 
-import safesync.files
+import safesync.files as files
 from .files import FileType
 import safesync.client_file_journal as cfj
 

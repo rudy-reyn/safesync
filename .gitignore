@@ -12,6 +12,8 @@ cabal-dev
 .hsenv
 .cabal-sandbox/
 cabal.sandbox.config
+.archive
+.py*
 *.prof
 *.aux
 *.hp
@@ -23,6 +25,4 @@ cabal.project.local~
 .ghc.environment.*
 .DS_Store
 .venv
-.archive
-.py*
-.gitignore
+.etc

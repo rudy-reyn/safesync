@@ -1,37 +1,33 @@
 # files.py
 from __future__ import annotations
-from typing import Optional, NewType, Self, Generator, IO, BinaryIO
-from enum import Enum
-from dataclasses import dataclass, field, KW_ONLY
+
+from typing import (
+    Optional, NewType, Self,
+    Generator, IO, BinaryIO, TypeVar
+)
+
 from abc import abstractmethod, ABCMeta
+from dataclasses import dataclass, field, KW_ONLY
+from enum import Enum
 
 import hashlib
 from pathlib import Path
 
+from safesync.utils import hidden
 import safesync.crypto
 from .crypto import Credentials
 
 MEGABYTE = 2**20
 UnixTime = NewType("UnixTime", float)
-
-def hidden(*args, **kwargs):
-    return field(*args, repr=False, **kwargs)
+T = TypeVar("T")
 
 @dataclass
-class Partition:
-    """Stores the checksum and a <= 4 megabyte block data of a partitioned file."
-
-    The data and checksum are encrypted at uploaded time."""
-
-    checksum: str
-    data: bytes = hidden()
-
-@dataclass
-class FileSystemObject(metaclass=ABCMeta):
+class FSObject(metaclass=ABCMeta):
     """Base dataclass for FileObject and DirObject.
 
     Stores the path and the time of last modification.
-    The base and sub classes are mainly used for the sake of pattern matching."""
+    The base and sub classes are mainly used for the sake of pattern matching.
+    """
 
     path: str
     mod_time: Optional[UnixTime] = None
@@ -41,8 +37,18 @@ class FileSystemObject(metaclass=ABCMeta):
     def from_path(cls, path: Path, **kwargs) -> Self:
         return
 
+class DirObject(FSObject):
+    @classmethod
+    def from_path(cls, path: Path) -> Self:
+        stats = path.stat()
+        obj = cls(
+            path = path.name,
+            mod_time = stats.st_mtime,
+        )
+        return obj
+
 @dataclass
-class FileObject(FileSystemObject):
+class FileObject(FSObject):
     """Includes of generator of partitions that are read lazily."""
 
     _: KW_ONLY
@@ -58,66 +64,14 @@ class FileObject(FileSystemObject):
         )
         return file_object
 
-class DirObject(FileSystemObject):
-    @classmethod
-    def from_path(cls, path: Path) -> Self:
-        stats = path.stat()
-        obj = cls(
-            path = path.name,
-            mod_time = stats.st_mtime,
-        )
-        return obj
-
 @dataclass
-class _Encrypted:
-    _: KW_ONLY
-    credentials: Credentials = field(default_factory=Credentials)
+class Partition:
+    """Stores the checksum and a <= 4 megabyte block data of a partitioned file."
 
-@dataclass
-class EncryptedFileObject(FileObject, _Encrypted):
-    @classmethod
-    def from_file_object(cls, file_object, master_key):
-        creds = Credentials()
+    The data and checksum are encrypted at uploaded time."""
 
-        encrypted_partitions = (
-            encrypt_partition(partition, creds.key)
-            for partition in file_object.partitions
-        )
-
-        encrypt_file_object = cls(
-            path = crypto.encrypt(path, *creds),
-            mod_time = file_object.mod_time,
-            partitions = encrypted_partitions,
-            credentials = creds.encrypt_key(master_key)
-        )
-        return encrypt_file_object
-
-@dataclass
-class EncryptedDirObject(DirObject, _Encrypted):
-    @classmethod
-    def from_dir_object(cls, obj, master_key):
-        creds = Credentials()
-        enc = cls(
-            path = crypto.encrypt(obj.path, *creds),
-            mod_time = obj.mod_time,
-            credentials = creds.encrypt_key(master_key)
-        )
-        return enc
-
-@dataclass
-class EncryptedPartition(Partition, _Encrypted):
-    @classmethod
-    def from_partition(cls, part, parent_key) -> Self:
-        creds = Credentials()
-
-        encrypted_partition = cls(
-            checksum = crypto.encrypt(part.checksum.encode(), *creds),
-            data  = crypto.encrypt(part.data, *creds),
-            credentials = creds.encrypt_key(parent_key)
-        )
-        return encrypted_partition
-
-encrypt_partition = EncryptedPartition.from_partition
+    checksum: str
+    data: bytes = hidden()
 
 def partition_stream(stream: BinaryIO,
         chunk_size: int = 4 * MEGABYTE) -> Generator[Partition]:
@@ -127,22 +81,54 @@ def partition_stream(stream: BinaryIO,
     Paths are encrypted only if they need to be uploaded"""
 
     while data := stream.read(chunk_size):
-        partition = Partition(
+        yield Partition(
             checksum = sha256_digest(data),
             data = data
         )
-        yield partition
 
 def partition_file(path: Path | str, *args, **kwargs) -> Generator[Partition]:
     # Using a generator will automatically close the file.
     with open(path, "rb") as file:
         yield from partition_stream(file, *args, **kwargs)
 
-def enc_partition_stream(stream: BinaryIO, *args, **kwargs) -> Generator[EncryptedPartition]:
-    return map(encrypt_partition, partition_stream(stream, *args, **kwargs))
+@dataclass
+class _Encrypted:
+    _: KW_ONLY
+    credentials: Credentials = field(default_factory=Credentials)
 
-def enc_file_partitions(path: Path | str, *args, **kwargs) -> Generator[EncryptedPartition]:
-    return map(encrypt_partition, partition_file(path, *args, **kwargs))
+@dataclass
+class EncryptedFile(FileObject, _Encrypted):
+    pass
+
+@dataclass
+class EncryptedDir(DirObject, _Encrypted):
+    pass
+
+@dataclass
+class EncryptedPartition(Partition, _Encrypted):
+    pass
+
+def encrypt_fsobj(fs_obj: T, credentials: Optional[Credentials] = None) -> T:
+    if not credentials:
+        credentials = Credentials()
+
+    match fs_obj:
+        case DirObject(p, mt):
+            return EncryptedDir(p, mt, credentials=creds)
+        case FileObject(p, mt, parts):
+            enc_parts = map(encrypt_partition, parts)
+            return EncryptedFile(p, mt, enc_parts, credentials=creds)
+        case FSObject(_, _):
+            raise ValueError("Can't directly instantiate a base FSObject.")
+        case _:
+            raise ValueError("Not a file system object.")
+
+def encrypt_partition(p: Partition,
+            creds: Optional[Credentials] = None) -> EncryptedPartition:
+    if not creds:
+        creds = Credentials()
+
+    return EncryptedPartition(p.checksum, p.data, creds)
 
 def sha256_digest(data: bytes) -> bytes:
     return hashlib.sha256(data).hexdigest()
