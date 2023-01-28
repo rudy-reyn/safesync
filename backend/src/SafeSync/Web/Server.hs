@@ -9,11 +9,9 @@ import SafeSync.Web.Routes
 import SafeSync.Database.Connection
 import SafeSync.ObjectStore.Object
 
-runServer :: Config -> IO ()
-runServer config = do
-    let database = fromConfig config :: ConnectionString
-        objectStore = fromConfig config :: ConnectInfo
-    scotty (serverPort config) $ do
-        metadataEndpoint database objectStore
-        partitionsEndpoint database objectStore
-        userEndpoint database objectStore
+runServer :: Options -> ConnectInfo -> DBInfo -> IO ()
+runServer serverOptions s3Conn dbInfo config =
+    scottyOpts serverOptions $ do
+        metadataEndpoint s3Conn dbInfo 
+        partitionsEndpoint s3Conn dbInfo
+        userEndpoint s3Conn dbInfo

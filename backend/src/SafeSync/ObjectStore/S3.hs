@@ -18,20 +18,20 @@ moveFromStaging object = Destin
 
 stagingDestInfo :: DestinationInfo
 stagingDestInfo =
-    defaultDestinationInfo {dstBucket = toText Staging}
+    defaultDestinationInfo {dstBucket = show Staging}
 
 partitionsDestInfo :: DestinationInfo
 partitionsDestInfo =
-    defaultDestinationInfo {dstBucket = toText Partitions}
+    defaultDestinationInfo {dstBucket = show Partitions}
 
 newDownloadUrl :: S3Bucket -> Object -> Minio ByteString
 newDownloadUrl bucket object =
-    presignedGetObjectUrl (toText bucket) object 3600 []
+    presignedGetObjectUrl (show bucket) object 3600 []
 
 newUploadUrl :: S3Bucket -> Object -> Minio ByteString
 newUploadUrl bucket object =
-    presignedPutObjectUrl (toText bucket) object 3600 [] []
+    presignedPutObjectUrl (show bucket) object 3600 [] []
 
 getObjectInfo :: S3Bucket -> Object -> Minio ObjectInfo
 getObjectInfo object =
-    statObject (toText bucket) object defaultGetObjectOptions
+    statObject (show bucket) object defaultGetObjectOptions
