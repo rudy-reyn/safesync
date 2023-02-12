@@ -1,43 +1,78 @@
-cabal-version: 3.0
-name:           safesync
-version:        0.1.0.0
-author:         Rudy Reynolds
-maintainer:     rudy.reyn@gmail.com
-build-type:     Simple
+cabal-version:      3.0
+name:               safesync
+version:            0.1.0.0
+-- synopsis:
+-- description:
 
-source-repository head
-    type: git
-    location: https://github.com/rudy-reyn/safesync.io
+common warnings
+    ghc-options: -Wall
 
-executable project
-    main-is:          Main.hs
+library
+    import: warnings
+    exposed-modules:
+        SafeSync.Routes
+        SafeSync.Auth
+        SafeSync.Database.Models
+        SafeSync.Database.Queries
+        SafeSync.Database.Types
+        SafeSync.ObjectStore
+        SafeSync.ObjectStore.Events
+        SafeSync.ObjectStore.Webhooks
     build-depends:
-        base >= 4.14.3.0,
+        base ^>=4.16.4.0,
+        aeson,
+        bytestring,
+        data-default-class,
+        time,
+        text,
+        random,
+        scotty,
+        persistent == 2.14.4.4,
+        persistent-postgresql,
+        esqueleto,
+        minio-hs,
+        http-types,
+        http-client,
+        monad-logger,
+        mtl,
+        unliftio-core,
+        resourcet,
+        wai-extra,
+        uuid,
+        wai
+    hs-source-dirs: src
+    default-language: Haskell2010
+
+executable safesync
+    import:           warnings
+    main-is:          Main.hs
+    other-modules: Config
+    -- other-extensions:
+    build-depends:
+        base >=4.14.3.0,
+        aeson,
+        time,
+        bytestring,
+        text,
+        scotty,
+        esqueleto,
+        persistent == 2.14.4.4,
+        persistent-postgresql,
+        minio-hs,
+        http-types,
+        wai,
+        data-default-class,
         safesync
+
     hs-source-dirs:   app
     default-language: Haskell2010
 
-library
-    hs-source-dirs: src
-    build-depends:
-        base       >= 4.14.3.0,
-        bytestring >= 0.10.0.2 && < 0.12,
-        aeson      >= 2.1.1.0,
-        minio-hs   >= 1.6.0,
-        scotty     >= 0.12.1,
-        cryptonite >= 0.30,
-        persistent >= 2.14.4.4,
-        persistent-postgresql == 2.13.5.1
-        wai-extra
-        http-types
-    default-language: Haskell2010
-  
 test-suite safesync-test
+    import:           warnings
+    default-language: Haskell2010
+    -- other-modules:
+    -- other-extensions:
     type:             exitcode-stdio-1.0
     hs-source-dirs:   test
-    main-is:          Tests.hs
-    build-depends:
-        base >= 4.14.3.0,
-        safesync,
-        HUnit
-    default-language: Haskell2010
+    main-is:          Main.hs
+    build-depends: base, HUnit, text, safesync
