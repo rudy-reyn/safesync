@@ -1,7 +1,5 @@
 # Client Side Application
 
----
-
 ## **Overview**
 
 The client side application is written in Python and consists of four major components. These components are responsible for monitoring the file system, partitioning files, encrypting partitions, and maintaining consensus between the client application and the file system with the backend.
@@ -33,8 +31,6 @@ client <--> cfj
 - **Client File Journal (CFJ):** The CFJ is a SQLite database consisting of a file metadata table and a partition tables, responsible for storing file metadata, partition information, encryption keys,  and is more thoroughly detailed below.
 
 ## Client File Journal (CFJ)
-
----
 
 The client file journal is a SQLite database consisting of a metadata and partitions table. This is allows for persistent data storage in case of application shutdowns. If corrupted or deleted, the CFJ can be quickly derived from the file system and the server file journal.
 
@@ -71,8 +67,6 @@ The `next_id` field is a recursive foreign key pointing to the next `partition_i
 
 ## Partition Service
 
----
-
 The partition service can be broken down into two main applications, one for partitioning, analyzing, and encrypting files and another for decrypting and reconstructing files.
 
 See the [Security Overview](https://www.notion.so/Security-Overview-3613c096d42c44f49165de6c4a905f48) page for further details about the encryption and decryption process.
@@ -102,8 +96,6 @@ As described earlier, files are split into 8 megabyte chunks. A post request is 
 Downloading partitions is essentially the opposite of how uploading works. Initially, the client will send a request to the notification server asking for updates
 
 ## Challenges
-
----
 
 The primary challenges involved with the client side application boil down to data integrity,  consensus, and effectively partitioning data. Other challenges include managing memory cost and bandwidth usage of the client side application. The CAP theorem is an important aspect to consider.
 
