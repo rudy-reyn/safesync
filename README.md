@@ -6,9 +6,7 @@ with the client written in Python and the backend Haskell inspired by cloud host
 
 ### Table of Contents
 
-[Architecture Overview](https://www.notion.so/Architecture-Overview-5dae618645fa4c56bf57843739d1db1a)
-
-[Security Overview](https://www.notion.so/Security-Overview-3613c096d42c44f49165de6c4a905f48)
+[Repository](https://github.com/rudy-reyn/safesync.io)
 
 [Client Side Application](client/README.md)
 
