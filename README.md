@@ -4,8 +4,6 @@
 This is an end-to-end encrypted file syncing application
 with the client written in Python and the backend Haskell inspired by cloud hosting services such as Dropbox and Mega. A considerable emphasis has been placed on data integrity, privacy, and security.
 
-Go to [safesync.io](http://safesync.io) for the full write up.
-
 ### Table of Contents
 
 [Architecture Overview](https://www.notion.so/Architecture-Overview-5dae618645fa4c56bf57843739d1db1a)
