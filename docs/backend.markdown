@@ -10,7 +10,7 @@ permalink: /backend
 
 The backend consists of a synchronization server, a metadata database for storing partition and file information, and an object store used for storing files.
 
-![Backend Architecture](/assets/backend-flowchart.jpg){:class="img-responsive"}
+![Backend Architecture](assets/backend-flowchart.jpg){:class="img-responsive"}
 
 
 ## Object Storage
@@ -38,7 +38,7 @@ The upload processes can be broken down into an initialization phase, a synchron
 2. **Synchronization:** each encrypted partition is uploaded with its own HTTPs POST request, containing the synchronization token. The partitions are stored in the staging bucket in the object store in a subfolder.
 3. **Confirmation:** this includes validating the hashes of each partition, the size of the last partition, and the total number of partitions. After each partition is uploaded, the partitions are moved from the staging bucket to the storage bucket.
 
-![Approximate data structures](/assets/backend-objects.jpg){:class="img-responsive"}
+![](assets/backend-objects.jpg){:class="img-responsive"}
 
 ## Database
 
