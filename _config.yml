@@ -1,5 +1,10 @@
 name: safesync.io
 description: An end-to-end encrypted cloud file storage system.
 url: "https://safesync.io"
-markdown: GFL
 highlighter: rouge
+markdown: kramdown
+kramdown:
+ input: GFM
+ auto_ids: true
+ hard_wrap: false
+ syntax_highlighter: rouge
