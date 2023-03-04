@@ -4,6 +4,9 @@
 This is an end-to-end encrypted file syncing application
 with the client written in Python and the backend Haskell inspired by cloud hosting services such as Dropbox and Mega. A considerable emphasis has been placed on data integrity, privacy, and security.
 
+[Site](https://www.safesync.io)
+
+
 ### Table of Contents
 
 [Client Side Application](client/README.md)
