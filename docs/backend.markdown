@@ -10,13 +10,8 @@ permalink: /backend
 
 The backend consists of a synchronization server, a metadata database for storing partition and file information, and an object store used for storing files.
 
-```mermaid
-flowchart LR
-	sync(Synchronization Server)
-	sfj[(Metadata Database)]
-	sync --> sfj
-	sync --> store[(Object Store)]
-```
+![Backend Architecture](/assets/backend-flowchart.jpg){:class="img-responsive"}
+
 
 ## Object Storage
 
@@ -43,28 +38,7 @@ The upload processes can be broken down into an initialization phase, a synchron
 2. **Synchronization:** each encrypted partition is uploaded with its own HTTPs POST request, containing the synchronization token. The partitions are stored in the staging bucket in the object store in a subfolder.
 3. **Confirmation:** this includes validating the hashes of each partition, the size of the last partition, and the total number of partitions. After each partition is uploaded, the partitions are moved from the staging bucket to the storage bucket.
 
-```mermaid
-classDiagram
-
-class ObjectInfo {
-	 objectId :: Integer
-   objectName :: EncBase64
-   objectType :: ObjType
-   objModTime :: UTCTime
-   objectSalt :: Maybe Base64
-   objectKey  :: Maybe EncBase64
-   partitionIds :: Maybe [Integer]
- }
-
-class PartitionInfo {
-	 partitionId   :: Integer
-   partitionSalt :: Base64
-   partitionKey  :: EncBase64
-   nextId :: Maybe Integer
-}
-
-class Partition { partitionData :: ByteString }
-```
+![Approximate data structures](/assets/backend-objects.jpg){:class="img-responsive"}
 
 ## Database
 
