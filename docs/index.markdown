@@ -34,17 +34,8 @@ with the client written in Python and the backend Haskell inspired by cloud host
 
 The general architecture is composed of a client side application, an backend server, a backend database, and an object store. The notification server is used to ping the client with upload information to help maintain consensus. The synchronization server points to and encryption keys as well as the file object store. The file syncing and storage process is based around protocols such as rsync, Dropbox’s [Streaming Sync](https://dropbox.tech/infrastructure/streaming-file-synchronization),  and mega.io, with encryption done client side using symmetric encrypting.
 
-```mermaid!
-flowchart TD
-	client((Client))
-	sync(Synchronization Server)
-	sfj[(Metadata Database)]
-	sync --> sfj
-	sync --> store[(Object Store)]
-	
-	client <-.-> sync
-	store -.-> client
-```
+![Architecture Overview](assets/architecture-overview.jpg){:class="img-responsive"}
+
 
 Code for the client side application is written in Python and the backend is written in Haskell. The backend database use PostgreSQL as a database management system and [MinIO](https://min.io/) is used as an object store for storing files.
 
