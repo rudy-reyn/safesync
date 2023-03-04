@@ -69,8 +69,6 @@ The `next_id` field is a recursive foreign key pointing to the next `partition_i
 
 The partition service can be broken down into two main applications, one for partitioning, analyzing, and encrypting files and another for decrypting and reconstructing files.
 
-See the [Security Overview](https://www.notion.so/Security-Overview-3613c096d42c44f49165de6c4a905f48) page for further details about the encryption and decryption process.
-
 ## File Partitioning and Encryption
 
 Regular files are partitioned in chunks of 8 megabytes, who’s checksums are computed with a salted SHA-256 are queried against partition information stored in CFJ. If a partition is changed, the client file journal is updated, the partition is encrypted, and the synchronizer is invoked. For new files/partitions, a randomly generated salt is used to compute the checksum. Each partition encrypted with their own randomly generated 128 bit symmetric keys using AES-GCM before being synced with the server.
