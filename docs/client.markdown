@@ -11,7 +11,6 @@ The client side application is written in Python and consists of four major comp
 
 ![Client Architecture](assets/client-daemon-chart.jpg){:class="img-responsive"}
 
-
 **Client application components**:
 
 - **Modification Daemon**: The daemon monitors for changes in the file system based on changes in file size and modification times by querying the CFJ as well as checking for new and deleted files. The watchdog Python library is used for querying the file system. Upon detecting a change in the file system, the daemon can invoke the partition service.
@@ -60,8 +59,6 @@ The `next_id` field is a recursive foreign key pointing to the next `partition_i
 ## Partition Service
 
 The partition service can be broken down into two main applications, one for partitioning, analyzing, and encrypting files and another for decrypting and reconstructing files.
-
-See the [Security Overview](https://www.notion.so/Security-Overview-3613c096d42c44f49165de6c4a905f48) page for further details about the encryption and decryption process.
 
 ## File Partitioning and Encryption
 
