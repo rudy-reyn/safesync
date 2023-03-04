@@ -1,10 +1,9 @@
 ---
 layout: post
-title:  "Backend Application and API"
+title:  "Backend Application"
 categories: jekyll update
 permalink: /backend
 ---
-# Backend Application
 
 ## Synchronization and Backend Storage
 
