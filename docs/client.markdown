@@ -9,21 +9,8 @@ permalink: client
 
 The client side application is written in Python and consists of four major components. These components are responsible for monitoring the file system, partitioning files, encrypting partitions, and maintaining consensus between the client application and the file system with the backend.
 
-```mermaid!
-flowchart LR
-subgraph client[ ]
-	daemon(Modification Daemon)
-	part(Partition Service)
-	sync(Synchronization Daemon)
-end
+![Client Architecture](assets/client-daemon-chart.jpg){:class="img-responsive"}
 
-cfj[("Client File Journal (CFJ)")]
-
-daemon -.-> part
-part <--> sync
-
-client <--> cfj
-```
 
 **Client application components**:
 
