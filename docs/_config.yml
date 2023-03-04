@@ -1,0 +1,16 @@
+title: safesync.io
+
+name: safesync.io
+description: An end-to-end encrypted cloud file storage system.
+url: "https://safesync.io"
+baseurl: "" # the subpath of your site, e.g. /blog
+email: rudy.reyn@gmail.com
+
+github_username:  rudy-reyn
+
+# Build settings
+theme: minima
+
+plugins:
+  - jekyll-feed
+  - jekyll-spaceship
