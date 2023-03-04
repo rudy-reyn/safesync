@@ -43,7 +43,7 @@ The upload processes can be broken down into an initialization phase, a synchron
 2. **Synchronization:** each encrypted partition is uploaded with its own HTTPs POST request, containing the synchronization token. The partitions are stored in the staging bucket in the object store in a subfolder.
 3. **Confirmation:** this includes validating the hashes of each partition, the size of the last partition, and the total number of partitions. After each partition is uploaded, the partitions are moved from the staging bucket to the storage bucket.
 
-```mermaid!
+```mermaid
 classDiagram
 
 class ObjectInfo {
