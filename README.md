@@ -16,7 +16,7 @@ with the client written in Python and the backend Haskell inspired by cloud host
 
 - `PostgreSQL` as the backend database
 - `MinIO` as the file object store
-- `Servant` - A Haskell library for the backend web framework.
+- `Scotty` - A Haskell library for the backend web framework.
 - `esqueleto/persistent` for backend database management.
 - `crypto` for client side encryption.
 - `requests` for client side HTTPs.
