@@ -6,8 +6,6 @@ with the client written in Python and the backend Haskell inspired by cloud host
 
 ### Table of Contents
 
-[Repository](https://github.com/rudy-reyn/safesync.io)
-
 [Client Side Application](client/README.md)
 
 [Backend Application](backend/README.md)
