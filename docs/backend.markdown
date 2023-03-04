@@ -10,7 +10,7 @@ permalink: /backend
 
 The backend consists of a synchronization server, a metadata database for storing partition and file information, and an object store used for storing files.
 
-```mermaid!
+```mermaid
 flowchart LR
 	sync(Synchronization Server)
 	sfj[(Metadata Database)]
