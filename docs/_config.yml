@@ -1,8 +1,8 @@
-title: safesync.io
+title: safesync
 
-name: safesync.io
+name: safesync
 description: An end-to-end encrypted cloud file storage system.
-url: "https://safesync.io"
+url: "https://safesync.reyn.dev"
 baseurl: "" # the subpath of your site, e.g. /blog
 email: rudy.reyn@gmail.com
 
