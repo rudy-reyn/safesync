@@ -11,7 +11,7 @@ categories: jekyll update
 This is an end-to-end encrypted file syncing application
 with the client written in Python and the backend Haskell inspired by cloud hosting services such as Dropbox and Mega. A considerable emphasis has been placed on data integrity, privacy, and security.
 
-[Source Repository](https://github.com/rudy-reyn/safesync.io)
+[Source Repository](https://github.com/rudy-reyn/safesync)
 
 ### Table of Contents
 
